@@ -1,11 +1,17 @@
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpSegmenter;
 import org.apache.uima.UIMAException;
+import org.apache.uima.analysis_engine.AnalysisEngineDescription;
+import org.apache.uima.fit.factory.AggregateBuilder;
 import org.apache.uima.fit.factory.AnalysisEngineFactory;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.jcas.JCas;
+import org.hucompute.textimager.uima.spacy.SpaCyMultiTagger;
+import org.hucompute.textimager.uima.spacy.SpaCyMultiTagger3;
+import org.hucompute.textimager.uima.spacy.SpaCyMultiTaggerImproved;
 import org.hucompute.uimadockerwrapper.DockerWrappedEnvironment;
 import org.hucompute.uimadockerwrapper.DockerWrapperContainerConfiguration;
+import org.hucompute.uimadockerwrapper.base_env.DockerBaseJavaEnv;
 import org.hucompute.uimadockerwrapper.util.DockerWrapperUtil;
 import org.xml.sax.SAXException;
 
@@ -20,17 +26,19 @@ public class MainClass {
 
 // The annotation should be made within a container
         DockerWrapperContainerConfiguration cfg = DockerWrapperContainerConfiguration.default_config()
-                .with_run_in_container(true);
+                .with_run_in_container(true)
+                .with_unsafe_map_docker_daemon(true);
 
 // Create the wrapped pipeline from any AnalysisEngineDescription
         DockerWrappedEnvironment env = DockerWrappedEnvironment.from(
-                AnalysisEngineFactory.createEngineDescription(OpenNlpSegmenter.class)
+                AnalysisEngineFactory.createEngineDescription(OpenNlpSegmenter.class),
+                AnalysisEngineFactory.createEngineDescription(SpaCyMultiTagger3.class)
         ).with_pomfile(new File("pom.xml"));
+
 
 // Create the docker container, note the programm must have access to the docker daemon,
 // therefore the programm must either run as root or the current user has access to the daemon
         System.out.println(DockerWrapperUtil.cas_to_xmi(test_c));
         SimplePipeline.runPipeline(test_c,env.build(cfg));
-
     }
 }
