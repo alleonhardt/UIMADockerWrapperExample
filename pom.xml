@@ -34,13 +34,21 @@
         <dependency>
             <groupId>com.github.texttechnologylab</groupId>
             <artifactId>UIMADockerWrapper</artifactId>
-            <version>83daf45</version>
+            <version>008b6d9</version>
           </dependency>
         <dependency>
             <groupId>com.github.texttechnologylab.textimager-uima</groupId>
             <artifactId>textimager-uima-spacy</artifactId>
             <version>48b8de425f</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/de.tudarmstadt.ukp.dkpro.core/de.tudarmstadt.ukp.dkpro.core.opennlp-model-tagger-en-maxent -->
+        <dependency>
+            <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
+            <artifactId>de.tudarmstadt.ukp.dkpro.core.opennlp-model-tagger-en-maxent</artifactId>
+            <version>20120616.1</version>
+        </dependency>
+
 
 
         <dependency>

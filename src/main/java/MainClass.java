@@ -27,12 +27,14 @@ public class MainClass {
 // The annotation should be made within a container
         DockerWrapperContainerConfiguration cfg = DockerWrapperContainerConfiguration.default_config()
                 .with_run_in_container(true)
+                .with_scaleout(3)
+                .with_autostop(false)
+                .with_tag_name("192.168.0.171:5000/repro")
                 .with_unsafe_map_docker_daemon(true);
 
 // Create the wrapped pipeline from any AnalysisEngineDescription
         DockerWrappedEnvironment env = DockerWrappedEnvironment.from(
-                AnalysisEngineFactory.createEngineDescription(OpenNlpSegmenter.class),
-                AnalysisEngineFactory.createEngineDescription(SpaCyMultiTagger3.class)
+                AnalysisEngineFactory.createEngineDescription(OpenNlpSegmenter.class)
         ).with_pomfile(new File("pom.xml"));
 
 
@@ -40,5 +42,6 @@ public class MainClass {
 // therefore the programm must either run as root or the current user has access to the daemon
         System.out.println(DockerWrapperUtil.cas_to_xmi(test_c));
         SimplePipeline.runPipeline(test_c,env.build(cfg));
+        System.out.println(DockerWrapperUtil.cas_to_xmi(test_c));
     }
 }
