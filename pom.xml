@@ -34,7 +34,7 @@
         <dependency>
             <groupId>com.github.texttechnologylab</groupId>
             <artifactId>UIMADockerWrapper</artifactId>
-            <version>eb0731e</version>
+            <version>008b6d9</version>
           </dependency>
 
         <dependency>
